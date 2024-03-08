@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  username   String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Event {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  event_name             String
+  start_date             DateTime
+  end_date               DateTime
+  max_score              Int
+  venue                  String
+  organizer_name         String
+  organizer_email        String?
+  organizer_phone_number String?
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+  team_id                String   @db.ObjectId
+  teams                  Team     @relation(fields: [team_id], references: [id])
+}
+
+model Team {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  team_name          String
+  team_logo          String
+  total_score        Int
+  coach_name         String
+  coach_email        String?
+  coach_phone_number String?
+  Home               Boolean
+  Away               Boolean
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  logo               Logo[]
+  event              Event[]
+  players            Player[]
+}
+
+model Logo {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  logo_filename String
+  data          Bytes
+  team_id       String @map("team_id") @db.ObjectId
+  team          Team   @relation(fields: [team_id], references: [id])
+}
+
+model Player {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  team_id      String   @map("team_id") @db.ObjectId
+  team         Team     @relation(fields: [team_id], references: [id])
+  score        Int?
+  age          Int
+  gender       String
+  phone_number String?
+  address      String?
+  city         String?
+  state        String?
+  country      String?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
