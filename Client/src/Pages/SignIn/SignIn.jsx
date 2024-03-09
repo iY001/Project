@@ -48,6 +48,7 @@ function SignIn() {
           setCookie('token', token);
           setCookie('user', user);
           console.log(token)
+          console.log(user)
         })
         // Simulate a pending state for 3 seconds
         await setTimeout(() => {
