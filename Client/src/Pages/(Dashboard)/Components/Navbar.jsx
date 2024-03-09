@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { IoLogOutOutline } from "react-icons/io5";
 import Sidebar from './Sidebar';
 import { useCookies } from 'react-cookie';
-import { ApiUrl } from '../../../Config/ApiUrl';
 
 
 function Navbar({ showSidebar, setShowSidebar }) {
 
-    const [cookies, setCookie] = useCookies(['token']);
-    const token = cookies.token;
-
-    useEffect(() => {
-        ApiUrl.get(`/user/${userId}`).then((response) => {
-            console.log(response.data)
-        })
-    }, [])
-
+    
     return (
         <>
             <div className='relative md:w-full w-full flex items-center justify-between md:pr-6 pr-2 py-5 bg-main bg-opacity-80 shadow-lg'>
