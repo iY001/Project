@@ -44,7 +44,9 @@ function SignIn() {
 
         ApiUrl.post('/user/login', formData).then((response) => {
           const token = response.data.token;
+          const user = response.data.user;
           setCookie('token', token);
+          setCookie('user', user);
           console.log(token)
         })
         // Simulate a pending state for 3 seconds
