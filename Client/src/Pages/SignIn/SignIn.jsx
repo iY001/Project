@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
@@ -19,7 +18,7 @@ function SignIn() {
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
-      navigate('/already-logged-in')
+      navigate('/')
     }
   }, [token, navigate])
 
