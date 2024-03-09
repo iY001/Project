@@ -2,7 +2,7 @@
   "name": "assignment_2",
   "version": "1.0.0",
   "description": "",
-  "main": "config.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index",
     "build" : "prisma generate && prisma migrate deploy",
