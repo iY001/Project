@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import { ApiUrl } from '../../Config/ApiUrl';
 
 function SignIn() {
   const [cookies, setCookie] = useCookies(['token']);
@@ -42,7 +43,7 @@ function SignIn() {
           setError("Fill all the fields");
         }
 
-        axios.post('http://localhost:8000/user/login', formData).then((response) => {
+        ApiUrl.post('/user/login', formData).then((response) => {
           const token = response.data.token;
           setCookie('token', token);
           console.log(token)

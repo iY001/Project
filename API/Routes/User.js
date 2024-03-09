@@ -15,33 +15,21 @@ const deleteUserById = require('../Services/User/deleteUserById');
 const prisma = new PrismaClient();
 
 // Create a new user
-router.post('/register', async (req, res) => {
-  register(req, res);
-});
+router.post('/register', register);
 
 // Login
-router.post('/login', async (req, res) => {
-  login(req, res);
-});
+router.post('/login', login);
 
 // Retrieve all users
-router.get('/',authMiddleware, async (req, res) => {
-  getAllUsers(req, res);
-});
+router.get('/', authMiddleware, getAllUsers);
 
 // Retrieve a specific user by ID
-router.get('/:id', async (req, res) => {
-  getUserById(req, res);
-}); 
+router.get('/:id', getUserById);
 
 // Update an existing user
-router.put('/:id', async (req, res) => {
-  putUserById(req, res);
-});
+router.put('/:id', putUserById);
 
 // Delete a user
-router.delete('/:id', async (req, res) => {
-  deleteUserById(req, res);
-});
+router.delete('/:id', deleteUserById);
 
 module.exports = router;
