@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "/",
-      "use": "npx prisma generate"
-    },
-    {
       "src": "index.js",
       "use": "@vercel/node"
     }
