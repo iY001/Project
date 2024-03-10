@@ -34,20 +34,20 @@ model Event {
   organizer_phone_number String?
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
-  team_id                String   @db.ObjectId
-  teams                  Team     @relation(fields: [team_id], references: [id])
+  team_id                String?   @db.ObjectId
+  teams                  Team?     @relation(fields: [team_id], references: [id])
 }
 
 model Team {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   team_name          String
-  team_logo          String
+  team_logo          String?
   total_score        Int
   coach_name         String
   coach_email        String?
   coach_phone_number String?
-  Home               Boolean
-  Away               Boolean
+  home               Boolean?
+  away               Boolean?
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
   logo               Logo[]

@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 app.use('/user',require("./Routes/User"))
 app.use('/event',require("./Routes/Event"))
 app.use('/team',require("./Routes/Team"))
-app.use('/student',require("./Routes/Player"))
+app.use('/player',require("./Routes/Player"))
 
 // Start the server
 app.listen(port, () => {

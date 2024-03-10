@@ -7,13 +7,14 @@ async function getAllEvents(req, res) {
           include: {
             teams: {
               include :{
-                students :true
+                players :true
               }
             },
           },
         });
         res.json(events);
       } catch (error) {
+        console.log(error);
         res.status(500).send('Error retrieving events');
       }
     }

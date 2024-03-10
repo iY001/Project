@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function deleteEvent(req, res) {
     try {
-        const eventId = parseInt(req.params.id);
+        const eventId = req.params.id;
         
         await prisma.event.delete({
           where: { id: eventId },

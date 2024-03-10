@@ -2,17 +2,18 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function deletePlayer(req, res) {
-    try {
-        const studentId = parseInt(req.params.id);
-        
-        await prisma.student.delete({
-          where: { id: studentId },
-        });
-        
-        res.send(`Student with ID ${studentId} deleted`);
-      } catch (error) {
-        res.status(500).send('Error deleting student');
-      }
-    }
+  try {
+    const playerId = req.params.id;
+
+    await prisma.player.delete({
+      where: { id: playerId },
+    });
+
+    res.send(`Player with ID ${playerId} deleted`);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error deleting player');
+  }
+}
 
 module.exports = deletePlayer
