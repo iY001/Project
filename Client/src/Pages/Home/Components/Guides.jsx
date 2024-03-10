@@ -14,7 +14,7 @@ function Guides() {
           </p>
         </section>
 
-        <section className="w-full flex lg:flex-row flex-col justify-center">
+        <section className="lg:w-[90%] w-full mx-auto flex lg:flex-row flex-col justify-center">
           <FeatureCard />
         </section>
       </div>

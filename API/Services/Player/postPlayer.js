@@ -6,7 +6,7 @@ async function postPlayer(req, res) {
         const { name, score , email, age, gender, phone_number, address, city, state, country, team_id } = req.body;
     
         // Check if the team with the specified team_id exists
-        const existingTeam = await prisma.team.findUnique({
+        const existingTeam = await prisma.team.findFirst({
           where: {
             id: team_id,
           },

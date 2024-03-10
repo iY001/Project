@@ -6,7 +6,7 @@ function AddForm({ setShowForm }) {
             <div className="absolute top-0 left-0 right-0 min-h-screen flex justify-center items-center bg-gray-100 bg-opacity-50 p-0  transition-transform ease-in duration-300 ">
                 <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl md:w-full w-[80%]">
                     <section className='flex justify-between items-center mb-8'>
-                        <h1 className="text-2xl text-main    font-bold">Add User</h1>
+                        <h1 className="text-2xl text-main    font-bold">Add Event</h1>
                         <button onClick={() => setShowForm(false)}>Close</button>
                     </section>
                     <form id="form" noValidate>

@@ -51,7 +51,7 @@ function SignIn() {
           console.log(user)
         })
         // Simulate a pending state for 3 seconds
-        await setTimeout(() => {
+        setTimeout(() => {
           resolve();
         })
       } catch (error) {

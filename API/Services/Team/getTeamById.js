@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 async function getTeamById(req, res) {
     try {
         const teamId = parseInt(req.params.id);
-        const team = await prisma.team.findUnique({
+        const team = await prisma.team.findFirst({
           where: { id: teamId },
           include: {
             events: true,

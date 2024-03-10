@@ -70,7 +70,7 @@ model Player {
   team_id      String   @map("team_id") @db.ObjectId
   team         Team     @relation(fields: [team_id], references: [id])
   score        Int?
-  age          Int
+  age          Int?
   gender       String
   phone_number String?
   address      String?

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AddForm from '../../Components/AddForm';
+import AddForm from './Components/AddForm';
 
 function Events() {
     const [showForm, setShowForm] = useState(false);
@@ -14,7 +14,7 @@ function Events() {
             </div>
 
             <div className='flex justify-end p-12'>
-                <button onClick={() => setShowForm(!showForm)} className='bg-main hover:bg-opacity-80 focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 active:ring-gray-400 text-white font-bold rounded-[4.4px] py-4 px-8'>Add User</button>
+                <button onClick={() => setShowForm(!showForm)} className='bg-main hover:bg-opacity-80 focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 active:ring-gray-400 text-white font-bold rounded-[4.4px] py-4 px-8'>Add Event</button>
             </div>
             {showForm && <AddForm showForm={showForm} setShowForm={setShowForm} />}
         </div>
