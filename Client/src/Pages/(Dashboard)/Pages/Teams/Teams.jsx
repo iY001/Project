@@ -84,7 +84,7 @@ function Teams() {
                                     </section>
                                 </div>
                                 {/* Info Section */}
-                                <div className='w-full bg-gray-200 h-[80%] flex lg:flex-col flex-col text-6xl items-center ring-2 ring-gray-300 px-2 overflow-hidden'>
+                                <div className='w-full bg-gray-100 h-[80%] flex lg:flex-col flex-col text-6xl items-center ring-2 ring-gray-300 px-2 overflow-hidden'>
                                     <section className='w-full'>
                                         <h1 className='text-main text-opacity-70 uppercase font-bold text-xl'>Best Players</h1>
                                         <div className='w-full flex flex-wrap items-center'>
@@ -107,8 +107,8 @@ function Teams() {
                                     </section>
                                 </div>
                                 {/* Players Section */}
-                                <section className='text-gray-100 py-2 h-[15%] hover:text-white flex lg:justify-end justify-center mr-3'>
-                                    <button onClick={() => { setShowPlayers(!showPlayers); setPlayers(team.players) }} className='bg-white hover:bg-opacity-80 duration-300 text-main px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>More</button>
+                                <section className='text-gray-100 py-2 h-[15%] hover:text-white flex lg:justify-end w-full justify-center '>
+                                    <button onClick={() => { setShowPlayers(!showPlayers); setPlayers(team.players) }} className='bg-white lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-main px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>More</button>
                                     {showPlayers && <Players showPlayers={showPlayers} setShowPlayers={setShowPlayers} teamPlayers={players} team={team} teamName={team.team_name} />}
 
                                 </section>
