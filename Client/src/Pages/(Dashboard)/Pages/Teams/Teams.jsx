@@ -62,7 +62,7 @@ function Teams() {
         getTeams()
     }, [])
 
-
+    const sortedTeams = teams.slice().sort((a, b) => b.total_score - a.total_score);
     console.log(teams)
     return (
         <div className="md:py-2 lg:px-4">
@@ -71,7 +71,7 @@ function Teams() {
             <div className='p-12 flex flex-wrap lg:flex-row flex-col'>
                 {
                     error ? <h1>{error}</h1> :
-                        teams.map((team) => (
+                        sortedTeams.map((team) => (
                             <div className='lg:w-[25%] h-[350px] bg-main bg-opacity-80 flex flex-col lg:mx-4 my-4 rounded-md shadow-xl ring-2 ring-main ring-opacity-50'>
                                 <div className='w-full py-4 flex lg:flex-col flex-col text-6xl items-center px-4'>
                                     <section className='flex w-full'>

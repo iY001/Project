@@ -10,6 +10,7 @@ const postTeam = require('../Services/Team/postTeam');
 const putTeamById = require('../Services/Team/putTeamById');
 const deleteTeamById = require('../Services/Team/deleteTeamById');
 const connectTeam = require('../Services/Team/connectTeam');
+const removePlayer = require('../Services/Team/removePlayer');
 
 const prisma = new PrismaClient();
 router.use(authMiddleware);
@@ -37,6 +38,10 @@ router.post('/:eventId/connectTeam/:teamId', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   deleteTeamById(req, res);
+});
+
+router.put('/:teamId/removeplayer/:playerId', async (req, res) => {
+  removePlayer(req, res);
 });
 
 module.exports = router;

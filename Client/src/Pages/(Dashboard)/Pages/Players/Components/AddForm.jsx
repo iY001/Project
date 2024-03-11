@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../Components/formStyle.css';
 import axios from 'axios';
 import { ApiUrl } from '../../../../../Config/ApiUrl';
+import { useNavigate } from 'react-router-dom';
 function AddForm({ setShowForm }) {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -50,26 +55,46 @@ function AddForm({ setShowForm }) {
     };
     // Function to handle form submission
     const handleSubmit = async () => {
-        try {
-            // Start loading
-            setLoading(true);
+        const promise = new Promise(async (resolve, reject) => {
+            try {
+                // Start loading
+                setLoading(true);
 
-            // Make the API request using Axios
-            const response = await ApiUrl.post('/player', formData);
+                // Make the API request using Axios to add a new player
+                const response = await ApiUrl.post('/player', formData);
 
-            // Handle the response as needed
-            console.log('Data submitted successfully:', response.data);
+                // Handle the response as needed
+                console.log('Data submitted successfully:', response.data);
+
+                setLoading(false);
+                // Close the form or perform any other necessary action
 
 
-            // Close the form
-            setShowForm(false);
-        } catch (error) {
-            // Handle errors
-            console.error('Error submitting data:', error);
-        } finally {
-            // Stop loading whether the request was successful or not
-            setLoading(false);
-        }
+                // Resolve the promise
+                resolve();
+
+                setTimeout(() => {
+                    setShowForm(false);
+                    navigate(0);
+                }, 2000)
+            } catch (error) {
+                // Handle errors
+                console.error('Error submitting data:', error);
+
+                // Reject the promise with the error
+                reject(error);
+            } finally {
+                // Stop loading whether the request was successful or not
+                setLoading(false);
+            }
+        });
+
+        // Use react-toastify to show a loading message
+        toast.promise(promise, {
+            pending: 'Submitting data...',
+            success: 'Data submitted successfully 👌',
+            error: 'Error submitting data',
+        });
     };
     return (
         <>
@@ -171,7 +196,7 @@ function AddForm({ setShowForm }) {
                     </form>
                 </div>
             </div>
-
+            <ToastContainer position="bottom-right" autoClose={1000} />
         </>
     )
 }
