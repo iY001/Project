@@ -27,14 +27,16 @@ function Players({ setShowPlayers, teamPlayers, team }) {
                                         <section>
                                             <GoPersonFill className='text-main text-3xl' />
                                         </section>
+
                                     </section>
                                 </div>
 
                             ))
                         }
                     </section>
-                    <section className='flex justify-between items-center py-4 px-5 border-b-2'>
-
+                    <section className='flex justify-end items-center py-4 px-5 border-b-2'>
+                        <button className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Edit</button>
+                        <button className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Delete</button>
                     </section>
                 </div>
             </div>
