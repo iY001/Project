@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function postTeam(req, res) {
   try {
-    const { team_name, total_score, coach_name, coach_email, coach_phone_number, home, away } = req.body;
+    const { team_name, total_score, coach_name, coach_email, coach_phone_number} = req.body;
     const newTeam = await prisma.team.create({
       data: {
         team_name,
@@ -11,8 +11,6 @@ async function postTeam(req, res) {
         coach_name,
         coach_email,
         coach_phone_number,
-        home,
-        away
       }
     });
     res.json(newTeam);

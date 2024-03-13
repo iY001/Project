@@ -1,10 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { ApiUrl } from '../../../../Config/ApiUrl';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AddForm from './Components/AddForm';
 import { GoPersonFill } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 function Players({ setShowPlayers, teamPlayers, team }) {
-    console.log(team)
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const deleteTeam = async () => {
+        try {
+            // Use react-toastify to show a loading message
+            const promise = new Promise(async (resolve, reject) => {
+                setLoading(true);
+                try {
+                    await ApiUrl.delete(`/team/${team.id}`);
+                    resolve();
+                    setLoading(false);
+                    setShowPlayers(false);
+                    navigate(0);
+                    console.log("Team deleted successfully");
+                } catch (error) {
+                    setLoading(false);
+                    console.error('Error deleting player:', error);
+                    reject(error);
+                }
+            });
+
+            toast.promise(promise, {
+                pending: 'Deleting Team...',
+                success: 'Team deleted successfully 👌',
+                error: 'Error deleting Team',
+            });
+        } catch (error) {
+            console.error('Error deleting team:', error);
+            // Handle error as needed
+        }
+    };
+    console.log("team", team);
     return (
         <>
             <div className="absolute top-0 left-0 right-0 min-h-screen flex justify-center items-center bg-gray-100 bg-opacity-50 p-0  transition-transform ease-in duration-300 ">
@@ -36,14 +70,15 @@ function Players({ setShowPlayers, teamPlayers, team }) {
                     </section>
                     <section className='flex justify-end items-center py-4 px-5 border-b-2'>
                         <button className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Edit</button>
-                        <button className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Delete</button>
+                        <button onClick={() => deleteTeam()} className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Delete</button>
                     </section>
                 </div>
             </div>
+            <ToastContainer position="bottom-right" autoClose={2000} />
+
         </>
     )
 }
-
 function Teams() {
     const [showForm, setShowForm] = useState(false);
     const [showPlayers, setShowPlayers] = useState(false)

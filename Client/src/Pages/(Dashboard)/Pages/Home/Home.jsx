@@ -58,7 +58,7 @@ function Dashboard() {
         getEvents();
     }, [])
 
-    const sortedPlayers = players.slice(0, 4).sort((a, b) => b.score - a.score);
+    const sortedPlayers = players.slice(0, 3).sort((a, b) => b.score - a.score);
 
     return (
         <div className="md:py-2 lg:px-4">

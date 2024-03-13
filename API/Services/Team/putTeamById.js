@@ -32,8 +32,6 @@ async function putTeamById(req, res) {
         coach_name,
         coach_email,
         coach_phone_number,
-        home,
-        away
       },
       include: {
         logo: true,

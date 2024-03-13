@@ -5,9 +5,9 @@ async function getAllTeams(req, res) {
   try {
     const teams = await prisma.team.findMany({
       include: {
-        logo: true,
         event: true,
-        players: true
+        players: true,
+        matches: true
       },
     });
     res.json(teams);

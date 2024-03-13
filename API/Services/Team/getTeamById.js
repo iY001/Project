@@ -8,7 +8,7 @@ async function getTeamById(req, res) {
           where: { id: teamId },
           include: {
             events: true,
-            students:true
+            players:true
           },
         });
         if (team) {

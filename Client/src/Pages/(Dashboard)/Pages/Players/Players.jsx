@@ -6,8 +6,10 @@ import { ApiUrl } from '../../../../Config/ApiUrl'
 import AddForm from './Components/AddForm';
 import { IoClose } from "react-icons/io5";
 import { redirect, useNavigate } from 'react-router-dom';
+import EditForm from './Components/EditForm';
 
 const ReadMore = ({ setShowMore, selectedPlayer }) => {
+    const [showEditForm, setShowEditForm] = useState(false);
     const navigate = useNavigate();
     console.log(selectedPlayer.id)
     const deletePlayer = async (playerId) => {
@@ -53,12 +55,15 @@ const ReadMore = ({ setShowMore, selectedPlayer }) => {
                         <h1 className='text-gray-800 text-xl font-bold '>Phone Number: {selectedPlayer.phone_number ? selectedPlayer.phone_number : "N/A"}</h1>
                     </section>
                     <section className='flex justify-end items-center py-4 px-5 border-b-2'>
-                        <button className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Edit</button>
+                        <button onClick={() => setShowEditForm(!showEditForm)} className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Edit</button>
                         <button onClick={() => deletePlayer(selectedPlayer.id)} className='bg-main lg:ml-0 ml-5 hover:bg-opacity-80 duration-300 text-white px-8 py-1 rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Delete</button>
                     </section>
                 </div>
             </div>
             <ToastContainer position="bottom-right" autoClose={2000} />
+            {
+                showEditForm && <EditForm selectedPlayer={selectedPlayer} setShowEditForm={setShowEditForm} />
+            }
         </>
     )
 }
