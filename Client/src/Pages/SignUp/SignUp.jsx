@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { Link, redirect, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ApiUrl } from '../../Config/ApiUrl';
 
 function SignUp() {
   const [cookies] = useCookies(['token']);
@@ -51,12 +52,12 @@ function SignUp() {
           return;
         }
         // Simulate a pending state for 3 seconds
+
+        // Make a POST request to your signup API endpoint
+        const response = await ApiUrl.post('/user/register', formData);
         await setTimeout(() => {
           resolve();
         }, 3000);
-
-        // Make a POST request to your signup API endpoint
-        const response = await axios.post('http://localhost:8000/user/register', formData);
 
         // Handle other success-related actions (e.g., redirect)
         console.log('Account created successfully:', response.data);
@@ -136,7 +137,7 @@ function SignUp() {
           </div>
         </form>
       </div>
-      <ToastContainer position="bottom-right" autoClose={5000} />
+      <ToastContainer position="bottom-right" autoClose={2000} />
     </section>
 
     </>
