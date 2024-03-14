@@ -9,7 +9,8 @@ const getMatchById = require('../Services/Match/getMatchById');
 const postMatch = require('../Services/Match/postMatch');
 const putMatchById = require('../Services/Match/putMatchById');
 const deleteMatchById = require('../Services/Match/deleteMatchById');
-const connectMatch = require('../Services/Match/connectMatch');
+const connectEvent = require('../Services/Match/connectEvent');
+const connectTeam = require('../Services/Match/connectTeam');
 
 
 const prisma = new PrismaClient();
@@ -35,7 +36,10 @@ router.delete('/:id', async (req, res) => {
     deleteMatchById(req, res);
 });
 
-router.post('/:match_id/connectmatch/:event_id', async (req, res) => {
-    connectMatch(req, res);
+router.post('/:match_id/connectevent/:event_id', async (req, res) => {
+    connectEvent(req, res);
+})
+router.post('/:match_id/connectteam/:team_id', async (req, res) => {
+    connectTeam(req, res);
 })
 module.exports = router

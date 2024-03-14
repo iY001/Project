@@ -6,7 +6,7 @@ import { GoPersonFill } from "react-icons/go";
 const Event = ({ event }) => {
     const start_date = new Date(event.start_date)
     const end_date = new Date(event.end_date)
-    console.log(event)
+    console.log("events", event)
     return (
         <div className='flex flex-col py-4 px-5 bg-main rounded-md'>
             <section className='flex justify-between items-center'>
@@ -19,7 +19,7 @@ const Event = ({ event }) => {
             <section className='flex justify-between items-center'>
                 <section className='flex flex-col'>
                     <h1 className='text-white text-2xl font-bold'>Teams</h1>
-                    <p className='text-gray-50 text-sm font-semibold'>{event.teams.team_name + " - " + event.teams.team_name} </p>
+                    <p className='text-gray-50 text-sm font-semibold'>{ } </p>
                     <h1 className='text-white text-2xl font-bold'>Venues</h1>
                     <p className='text-gray-50 text-sm font-semibold'>{event.venue} </p>
                 </section>
@@ -55,7 +55,7 @@ function Events() {
             <h1 className="text-3xl text-main font-medium">Events</h1>
 
             <div className='p-12'>
-                <section className='flex flex-row'>
+                <section className='flex flex-row flex-wrap gap-3'>
                     {
                         error ? <h1>{error}</h1> :
                             events.map((event) => (

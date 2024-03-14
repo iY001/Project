@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const putMatchById = async (req, res) => {
   const matchId = req.params.id; // Assuming the match ID is provided in the URL parameters
-  const { score, winner, match_date, team_id, event_id } = req.body;
+  const { score1,score2, winner, match_date, team_id, event_id } = req.body;
 
   try {
     const prisma = new PrismaClient();
@@ -24,7 +24,8 @@ const putMatchById = async (req, res) => {
         id: matchId,
       },
       data: {
-        score: score !== undefined ? score : existingMatch.score,
+        score1: score1 !== undefined ? score1 : existingMatch.score1,
+        score2: score2 !== undefined ? score2 : existingMatch.score2,
         winner: winner !== undefined ? winner : existingMatch.winner,
         match_date: match_date !== undefined ? match_date : existingMatch.match_date,
         team: team_id ? { connect: { id: team_id } } : undefined,

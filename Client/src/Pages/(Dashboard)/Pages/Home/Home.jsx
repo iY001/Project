@@ -77,14 +77,14 @@ function Dashboard() {
                 {!loadingPlayers && !err && (
                     <div className='flex justify-center md:justify-start flex-wrap'>
                         {sortedPlayers.map((player) => (
-                            <div className='lg:w-[30%] w-full p-12 flex flex-col bg-gray-100 shadow-lg rounded-md mr-4 ring-2 ring-opacity-30 ring-main mb-6' key={player.id}>
+                            <div className='lg:w-1/3 w-full p-12 flex flex-col bg-gray-100 shadow-lg rounded-md mr-4 ring-2 ring-opacity-30 ring-main mb-6' key={player.id}>
                                 <div className='flex flex-col text-left'>
                                     <GoPersonFill className='text-main text-6xl mx-auto' />
                                     <h1 className='text-main text-2xl w-full'>
                                         {player.name}
                                     </h1>
                                     <p className='text-gray-500'>Score: {player.score}</p>
-                                    <p className='text-gray-500'>Team: {player.team.team_name}</p>
+                                    <p className='text-gray-500 w-full'>Team: {player.team.team_name}</p>
                                 </div>
                             </div>
                         ))}

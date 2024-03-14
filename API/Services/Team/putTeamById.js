@@ -11,8 +11,7 @@ async function putTeamById(req, res) {
       coach_name,
       coach_email,
       coach_phone_number,
-      home,
-      away
+      players
     } = req.body;
 
     // Optional: You may want to check if the team with the given ID exists before updating
@@ -24,6 +23,7 @@ async function putTeamById(req, res) {
       return res.status(404).send('Team not found');
     }
 
+    // Update the team's basic information
     const updatedTeam = await prisma.team.update({
       where: { id: teamId },
       data: {
@@ -32,19 +32,40 @@ async function putTeamById(req, res) {
         coach_name,
         coach_email,
         coach_phone_number,
-      },
-      include: {
-        logo: true,
-        event: true,
-        players: true
       }
     });
 
+    console.log("players", players);
+    // Update the team's associated players
+    if (players && players.length > 0) {
+      // Define an array to store player connection promises
+      const playerConnectionPromises = [];
+
+      // Iterate over each player in the players array
+      players.forEach(playerId => {
+        // Connect each player to the team
+        playerConnectionPromises.push(
+          prisma.team.update({
+            where: { id: teamId },
+            data: {
+              players: {
+                connect: { id: playerId } // Connect each player individually
+              }
+            }
+          })
+        );
+      });
+
+      // Execute all player connection promises concurrently
+      await Promise.all(playerConnectionPromises);
+    }
+
     res.json(updatedTeam);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send('Error updating team');
   }
 }
 
 module.exports = putTeamById;
+

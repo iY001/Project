@@ -1,11 +1,18 @@
-const {PrismaClient} = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 
 const getAllMatches = async (req, res) => {
     try {
         const prisma = new PrismaClient();
-        const matches = await prisma.match.findMany();
+        const matches = await prisma.match.findMany(
+            {
+                include: {
+                    teams: true,
+                    events: true,
+                }
+            }
+        );
         res.status(200).send(matches);
-    }catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }

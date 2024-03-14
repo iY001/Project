@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../Components/formStyle.css';
 import axios from 'axios';
 import { ApiUrl } from '../../../../../Config/ApiUrl';
+import { useNavigate } from 'react-router-dom';
 function AddForm({ setShowForm }) {
     const [formData, setFormData] = useState({
         team_name: "",
@@ -9,11 +10,10 @@ function AddForm({ setShowForm }) {
         coach_name: "",
         coach_email: "",
         coach_phone_number: "",
-        home: "",
-        away: ""
     });
     const [players, setplayers] = useState([]);
-
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         const getPlayers = async () => {
             try {
@@ -27,6 +27,7 @@ function AddForm({ setShowForm }) {
     }, []);
 
     console.log(players)
+    console.log("selected options", selectedOptions)
 
     // State variable to manage loading state
     const [loading, setLoading] = useState(false);
@@ -39,6 +40,20 @@ function AddForm({ setShowForm }) {
             [name]: value,
         });
         console.log("form submitted", formData)
+    };
+
+    const handleSelectChange = (e) => {
+        const { name, options } = e.target;
+        const selectedOptions = Array.from(options)
+            .filter((option) => option.selected)
+            .map((option) => option.value);
+        setSelectedOptions(selectedOptions);
+        setFormData({
+            ...formData,
+            [name]: selectedOptions,
+        });
+
+        console.log("form data updated:", formData);
     };
     const handleRadioChange = (value) => {
         setFormData({
@@ -60,7 +75,10 @@ function AddForm({ setShowForm }) {
 
 
             // Close the form
-            setShowForm(false);
+            setTimeout(() => {
+                setShowForm(false);
+                navigate(0);
+            }, 2000)
         } catch (error) {
             // Handle errors
             console.error('Error submitting data:', error);
@@ -128,7 +146,7 @@ function AddForm({ setShowForm }) {
                         </fieldset>
                         <div className="relative z-0 w-full mb-5">
                             <select
-                                onChange={handleInputChange}
+                                onChange={handleSelectChange}
                                 name="players" // assuming the form data field is 'players'
                                 placeholder="Select players"
                                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-black border-gray-200"

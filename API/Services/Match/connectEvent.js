@@ -1,6 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 
-const connectMatch = async (req, res) => {
+const connectEvent = async (req, res) => {
   const { match_id , event_id } = req.params
   try {
     const prisma = new PrismaClient();
@@ -28,26 +28,26 @@ const connectMatch = async (req, res) => {
     }
 
     // Update the match to connect with the specified event
-    const updatedMatch = await prisma.match.update({
+    const updatedEvent = await prisma.event.update({
       where: {
-        id: match_id,
+        id: event_id,
       },
       data: {
-        event: {
+        matches: {
           connect: {
-            id: event_id,
+            id: match_id,
           },
         },
       },
     });
 
     // Fetch all matches after updating the match
-    const matches = await prisma.match.findMany();
+    const events = await prisma.event.findMany();
 
     res.status(200).json({
       message: 'Match connected with Event successfully',
-      updatedMatch,
-      matches,
+      updatedEvent,
+      events,
     });
   } catch (error) {
     console.error(error);
@@ -55,4 +55,4 @@ const connectMatch = async (req, res) => {
   }
 };
 
-module.exports = connectMatch;
+module.exports = connectEvent;
