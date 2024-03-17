@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Hero() {
     return (
@@ -15,8 +16,8 @@ function Hero() {
                         Create Your Winning Bracket: Seamless Tournament Management for Every Game and Sport!
                     </p>
                     <div className='my-6 lg:text-left md:text-center'>
-                        <button className='bg-main text-white px-12 py-2 rounded-md mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Explore</button>
-                        <button className='bg-white text-main px-12 py-2 rounded-md mr-4 shadow-lg focus:ring-4 ring-2 ring-main ring-opacity-30'>See More</button>
+                        <Link to={"/signup"} className='bg-main text-white px-12 py-2 rounded-md mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>Explore</Link>
+                        <a href='#features' className='bg-white text-main px-12 py-2 rounded-md mr-4 shadow-lg focus:ring-4 ring-2 ring-main ring-opacity-30'>See More</a>
                     </div>
                 </section>
             </div>

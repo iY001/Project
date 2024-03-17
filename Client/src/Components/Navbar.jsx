@@ -11,11 +11,11 @@ function Navbar() {
     },
     {
       name: 'About',
-      link: '/',
+      link: '#footer',
     },
     {
-      name: 'Events',
-      link: '/',
+      name: 'Features',
+      link: '#features',
     },
   ];
 

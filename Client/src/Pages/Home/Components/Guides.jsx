@@ -4,7 +4,7 @@ import FeatureCard from './FeatureCard'
 function Guides() {
   return (
     <>
-      <div className="lg:w-full md:w-full bg-gray-50 flex flex-col lg:flex-nowrap flex-wrap text-center py-10 px-6">
+      <div id='features' className="lg:w-full md:w-full bg-gray-50 flex flex-col lg:flex-nowrap flex-wrap text-center py-10 px-6">
         <section className="text-center">
           <h1 className="text-3xl mb-4 font-bold text-main">
             Features

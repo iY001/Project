@@ -3,6 +3,7 @@ import Navbar from '../../Components/Navbar'
 import Hero from './Components/Hero'
 import Guides from './Components/Guides'
 import AdvertCard from './Components/AdvertCard'
+import Footer from './Components/Footer'
 
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
       <Hero />
       <Guides />
       <AdvertCard />
+      <Footer />
     </>
   )
 }
