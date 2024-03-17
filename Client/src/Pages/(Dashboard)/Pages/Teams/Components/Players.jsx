@@ -5,41 +5,14 @@ import { GoPersonFill } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { ApiUrl } from '../../../../../Config/ApiUrl';
-function Players({ setShowPlayers, teamPlayers, team, teamID }) {
-    const [loading, setLoading] = useState(false);
+function Players({ deleteTeam, setShowPlayers, teamPlayers, team, teamID }) {
+
     const navigate = useNavigate();
 
     console.log("teamPlayers", teamPlayers);
     console.log("teamID", teamID);
     console.log("team", team);
-    const deleteTeam = async () => {
-        try {
-            const promise = new Promise(async (resolve, reject) => {
-                setLoading(true);
-                try {
-                    await ApiUrl.delete(`/team/${teamPlayers[0].id}`);
-                    resolve();
-                    setLoading(false);
-                    setShowPlayers(false);
-                    navigate(0);
-                    console.log("Team deleted successfully");
-                } catch (error) {
-                    setLoading(false);
-                    console.error('Error deleting player:', error);
-                    reject(error);
-                }
-            });
 
-            toast.promise(promise, {
-                pending: 'Deleting Team...',
-                success: 'Team deleted successfully 👌',
-                error: 'Error deleting Team',
-            });
-        } catch (error) {
-            console.error('Error deleting team:', error);
-            // Handle error as needed
-        }
-    };
 
     console.log("teamPlayers", teamPlayers);
     return (

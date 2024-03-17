@@ -34,10 +34,13 @@ const connectTeam = async (req, res) => {
       },
       data: {
         matches: {
-            connect: { id: match_id },
+          connect: {
+            id: match_id, // Connect the new match
+          }
         },
       },
     });
+    
 
     // Fetch all matches after updating the match
     const teams = await prisma.team.findMany();

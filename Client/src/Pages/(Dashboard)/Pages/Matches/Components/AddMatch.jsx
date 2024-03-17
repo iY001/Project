@@ -14,9 +14,12 @@ function AddMatch({ setShowForm }) {
     team_id2: "",
     event_id: "", // Changed from "event" to "event_id"
   });
+
+  console.log("formData", formData);
   const [teams, setTeams] = useState([]);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +40,7 @@ function AddMatch({ setShowForm }) {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true)
       const { match_date, team_id1, team_id2, event_id } = formData;
 
       // Create match
@@ -50,7 +54,7 @@ function AddMatch({ setShowForm }) {
       ]);
 
       // Show success message
-      toast.success("Match created successfully!");
+      toast.success(matchResponse.data.message);
 
       // Reset form and navigate
       setFormData({
@@ -59,10 +63,13 @@ function AddMatch({ setShowForm }) {
         team_id2: "",
         event_id: ""
       });
+      setLoading(false)
       navigate(0);
     } catch (error) {
+      setLoading(false)
+      setError(error.response.data.error);
       console.error("Error creating match:", error);
-      toast.error("Error creating match");
+      toast.error(error.response.data.error);
     }
   };
 
@@ -117,7 +124,7 @@ function AddMatch({ setShowForm }) {
                   ))
                 }
               </select>
-              <label htmlFor="select" className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Select an Team</label>
+              <label htmlFor="select" className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Select an Event</label>
               <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
             </div>
             <div className="relative z-0 w-full mb-5">
@@ -145,10 +152,10 @@ function AddMatch({ setShowForm }) {
               <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
             </div>
             <button
+              disabled={loading}
               id="button"
               type="button"
-              onClick={handleSubmit} // Call the handleSubmit function on button click
-              disabled={loading} // Disable the button while the form is being submitted
+              onClick={handleSubmit} // Call the handleSubmit function on button click // Disable the button while the form is being submitted
               className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-main hover:text-white hover:bg-opacity-80 hover:shadow-lg focus:outline-none"
             >
               {loading ? 'Submitting...' : 'Send'}

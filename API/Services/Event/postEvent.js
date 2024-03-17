@@ -13,9 +13,21 @@ async function postEvent(req, res) {
       organizer_name,
       organizer_email,
       organizer_phone_number,
-      team_id
     } = req.body;
 
+    if (start_date > end_date) {
+      return res.status(400).send({ error: 'Start date must be before end date' });
+    }
+
+    const exsitsEvent = await prisma.event.findFirst({
+      where: {
+        event_name
+      }
+    })
+
+    if (exsitsEvent) {
+      return res.status(400).send({ error: 'Event already exists' });
+    }
     const formattedStartDate = moment(start_date).toISOString();
     const formattedEndDate = moment(end_date).toISOString();
 
@@ -24,21 +36,20 @@ async function postEvent(req, res) {
         event_name,
         start_date: formattedStartDate,
         end_date: formattedEndDate,
-        max_score,
+        max_score : parseInt(max_score),
         venue,
         organizer_name,
         organizer_email,
-        organizer_phone_number,
-        teams: {
-          connect: { id: team_id }
-        }
+        organizer_phone_number
       }
     });
 
-    res.json(newEvent);
+    res.status(201).json({
+      message: 'Event created successfully',
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error creating event');
+    res.status(500).send({ error: 'Error creating event' });
   }
 }
 

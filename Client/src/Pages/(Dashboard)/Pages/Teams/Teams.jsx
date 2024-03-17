@@ -18,6 +18,8 @@ function Teams() {
     const [error, setError] = useState("")
     const [showEditForm, setShowEditForm] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState({});
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const getTeams = async () => {
         try {
             const response = await ApiUrl.get("/team")
@@ -31,6 +33,39 @@ function Teams() {
         getTeams()
     }, [])
 
+    const deleteTeam = async () => {
+        try {
+            const promise = new Promise(async (resolve, reject) => {
+                setLoading(true);
+                try {
+                    const response = await ApiUrl.delete(`/team/${selectedTeam.id}`);
+                    toast.success(response.data.message);
+
+                    setTimeout(() => {
+                        resolve();
+                        setLoading(false);
+                        setShowPlayers(false);
+                        navigate(0);
+                    }, 2000);
+                    console.log("Team deleted successfully");
+                } catch (error) {
+                    setLoading(false);
+                    console.error('Error deleting player:', error);
+                    toast.error(error.response.data.error);
+                    reject(error);
+                }
+            });
+
+            toast.promise(promise, {
+                pending: 'Deleting Team...',
+                success: 'Team deleted successfully 👌',
+                error: 'Error deleting Team',
+            });
+        } catch (error) {
+            console.error('Error deleting team:', error);
+            // Handle error as needed
+        }
+    };
     const sortedTeams = teams.slice().sort((a, b) => b.total_score - a.total_score);
     console.log("from teams", teams.players)
     return (
@@ -85,6 +120,7 @@ function Teams() {
                                             setShowPlayers={setShowPlayers}
                                             teamPlayers={players}
                                             team={selectedTeam}
+                                            deleteTeam={deleteTeam}
                                         />
                                     )}
                                 </section>

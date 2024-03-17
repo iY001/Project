@@ -38,7 +38,7 @@ function AddForm({ setShowForm }) {
 
     // State variable to manage loading state
     const [loading, setLoading] = useState(false);
-
+    const [error, setError] = useState(null);
     // Function to handle form input onChange={handleInputChange} changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -88,7 +88,8 @@ function AddForm({ setShowForm }) {
                 }, 2000)
             } catch (error) {
                 // Handle errors
-                console.error('Error submitting data:', error);
+                setError(error.response.data.message || 'An error occurred while submitting the data.');
+                console.error(error.response.data.message);
 
                 // Reject the promise with the error
                 reject(error);
@@ -102,7 +103,7 @@ function AddForm({ setShowForm }) {
         toast.promise(promise, {
             pending: 'Submitting data...',
             success: 'Data submitted successfully 👌',
-            error: 'Error submitting data',
+            error: error || 'Error submitting data.',
         });
     };
     return (

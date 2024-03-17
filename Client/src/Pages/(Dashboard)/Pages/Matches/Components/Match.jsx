@@ -129,7 +129,7 @@ const Match = ({ match, teams, index }) => {
                         <h1 className='text-md text-white font-medium'>{formattedDate}</h1>
                     </section>
                     <section className="flex lg:flex-row justify-end lg:items-center flex-col lg:w-[50%] w-full lg:gap-3">
-                        <button onClick={() => deleteMatch()} className="text-md bg-red-700 p-2 rounded-md hover:bg-red-600 text-white font-medium duration-300">{deleteLoader ? "Deleting..." : "Delete"}</button>
+                        <button disabled={loading? true : false} onClick={() => deleteMatch()} className="text-md bg-red-700 p-2 rounded-md hover:bg-red-600 text-white font-medium duration-300">{deleteLoader ? "Deleting..." : "Delete"}</button>
                     </section>
                 </section>
                 <div className='w-full mt-2 flex justify-center lg:flex-nowrap flex-wrap text-center  bg-white rounded-lg'>
@@ -147,7 +147,7 @@ const Match = ({ match, teams, index }) => {
                 </div>
                 <div className='w-full flex justify-between  pt-2'>
                     <section className='w-1/2 flex lg:flex-row flex-col gap-2'>
-                        <button
+                        <button disabled={loading? true : false}
                             onClick={() => addPoint(
                                 {
                                     match_id: match.id,
@@ -160,7 +160,7 @@ const Match = ({ match, teams, index }) => {
                         >
                             {addLoading ? 'Loading...' : 'Add Point'}
                         </button>
-                        <button
+                        <button disabled={loading? true : false}
                             onClick={() => removePoint(
                                 {
                                     match_id: match.id,
@@ -169,7 +169,7 @@ const Match = ({ match, teams, index }) => {
                                 },
                                 // Pass setLoading function to addPoint
                             )} className='bg-white lg:ml-0 ml-2 hover:bg-opacity-80 duration-300 text-main lg:w-fit w-24 px-8 py-1 font-bold rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>{removeLoading ? 'Loading...' : 'Remove Point'}</button>
-                        <button
+                        <button disabled={loading? true : false}
                             onClick={() => resetMatchPoints(
                                 {
                                     match_id: match.id,
@@ -178,7 +178,7 @@ const Match = ({ match, teams, index }) => {
                             )} className='bg-white lg:ml-0 ml-2 hover:bg-opacity-80 duration-300 text-main lg:w-fit w-24 px-8 py-1 font-bold rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>{resetLoading ? 'Loading...' : 'Clear'}</button>
                     </section>
                     <section className='w-1/2 flex lg:flex-row-reverse flex-col gap-2'>
-                        <button
+                        <button disabled={loading? true : false}
                             onClick={() => addPoint(
                                 {
                                     match_id: match.id,
@@ -190,8 +190,8 @@ const Match = ({ match, teams, index }) => {
                             className='bg-white lg:ml-0 ml-2 hover:bg-opacity-80 duration-300 text-main lg:w-fit w-24 px-8 py-1 font-bold rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'
                         >
                             {addLoading ? 'Loading...' : 'Add Point'}
-                        </button>
-                        <button
+                        </button >
+                        <button disabled={loading? true : false}
                             onClick={() => removePoint(
                                 {
                                     match_id: match.id,
@@ -200,7 +200,7 @@ const Match = ({ match, teams, index }) => {
                                 },
                                 // Pass setLoading function to addPoint
                             )} className='bg-white lg:ml-0 ml-2 hover:bg-opacity-80 duration-300 text-main lg:w-fit w-24 px-8 py-1 font-bold rounded-sm mr-4 shadow-lg focus:ring-2 ring-main ring-opacity-30'>{deleteLoader ? 'Loading...' : 'Remove Point'}</button>
-                        <button
+                        <button disabled={loading? true : false}
                             onClick={() => resetMatchPoints(
                                 {
                                     match_id: match.id,

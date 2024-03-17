@@ -3,6 +3,7 @@ import '../Components/formStyle.css';
 import axios from 'axios';
 import { ApiUrl } from '../../../../../Config/ApiUrl';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 function AddForm({ setShowForm }) {
     const [formData, setFormData] = useState({
         team_name: "",
@@ -13,6 +14,7 @@ function AddForm({ setShowForm }) {
     });
     const [players, setplayers] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         const getPlayers = async () => {
@@ -72,7 +74,7 @@ function AddForm({ setShowForm }) {
 
             // Handle the response as needed
             console.log('Data submitted successfully:', response.data);
-
+            toast.success(response.data.message);
 
             // Close the form
             setTimeout(() => {
@@ -80,8 +82,10 @@ function AddForm({ setShowForm }) {
                 navigate(0);
             }, 2000)
         } catch (error) {
-            // Handle errors
-            console.error('Error submitting data:', error);
+
+            setError(error.response.data.error);
+            console.error("Error creating match:", error);
+            toast.error(error.response.data.error);
         } finally {
             // Stop loading whether the request was successful or not
             setLoading(false);
@@ -116,34 +120,7 @@ function AddForm({ setShowForm }) {
                             <label htmlFor="coach_phone_number" className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter Coach Phone number</label>
                             <span className="text-sm text-red-600 hidden" id="error">phonenumber is required</span>
                         </div>
-                        <fieldset className="relative z-0 w-full p-px mb-5">
-                            <legend className="absolute text-gray-500 transform scale-75 -top-3 origin-0">Choose an option </legend>
-                            <div className="block pt-3 pb-2 space-x-4">
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="home"
-                                        value={true} // Check if the radio value is 'Male'
-                                        onChange={() => handleRadioChange(true)} // Update the radio value to 'Male' on change
-                                        className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
-                                    />
-                                    Male
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="home"
-                                        value={true}// Check if the radio value is 'Female'
-                                        onChange={() => handleRadioChange(true)} // Update the radio value to 'Female' on change
-                                        className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
-                                    />
-                                    Female
-                                </label>
-                            </div>
-                            <span className="text-sm text-red-600 hidden" id="error">
-                                Option has to be selected
-                            </span>
-                        </fieldset>
+
                         <div className="relative z-0 w-full mb-5">
                             <select
                                 onChange={handleSelectChange}
@@ -203,6 +180,7 @@ function AddForm({ setShowForm }) {
                 </div>
             </div>
 
+            <ToastContainer position="bottom-right" autoClose={1000} />
         </>
     )
 }

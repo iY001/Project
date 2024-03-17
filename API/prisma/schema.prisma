@@ -37,7 +37,7 @@ model Event {
   team_id                String?  @db.ObjectId
   teams                  Team?    @relation(fields: [team_id], references: [id])
   match_id               String?  @map("match_id") @db.ObjectId
-  matches                  Match?   @relation(fields: [match_id], references: [id])
+  matches                Match?   @relation(fields: [match_id], references: [id])
 }
 
 model Team {
