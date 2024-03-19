@@ -2,11 +2,12 @@ import React from 'react'
 import { IoLogOutOutline } from "react-icons/io5";
 import Sidebar from './Sidebar';
 import { Cookies, useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 
 function Navbar({ showSidebar, setShowSidebar }) {
-    const [token, setTokenCookie , removeTokenCookie] = useCookies(['token']);
-    const [cookies, setCookie , removeCookie] = useCookies(['user']);
+    const [token, setTokenCookie, removeTokenCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     // Retrieve the 'user' cookie value
     const user = cookies.user;
@@ -21,7 +22,9 @@ function Navbar({ showSidebar, setShowSidebar }) {
             <div className='relative md:w-full w-full flex items-center justify-between md:pr-6 pr-2 py-5 bg-main bg-opacity-80 shadow-lg'>
                 <section>
                     {/*aside*/}
-                    <div className='absolute top-0'>
+                    <div className='absolute top-0 flex'>
+                        <Link to={"/"} className='text-white font-bold font-[Poppins] ml-20 mt-5'>Back</Link>
+
                         <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
                     </div>
                     {/*aside*/}

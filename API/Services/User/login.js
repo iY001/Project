@@ -13,21 +13,21 @@ async function login(req, res) {
     });
 
     if (!user) {
-      return res.status(401).send({
-        error: 'Invalid username or password'
+      return res.send({
+        error: 'Not found'
       });
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-      return res.status(401).send({
+      return res.json({
         error: 'Invalid username or password'
       });
     }
 
     const token = jwt.sign({ id: user.id }, 'secret');
-    res.send({ token, "id": user.id , user : user});
+    res.send({ token, "id": user.id, user: user });
   } catch (error) {
     res.status(500).send({
       error: 'An error occurred while logging in',

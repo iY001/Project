@@ -55,9 +55,10 @@ function SignUp() {
 
         // Make a POST request to your signup API endpoint
         const response = await ApiUrl.post('/user/register', formData);
+        resolve();
+        setError(response.data.error);
+
         await setTimeout(() => {
-          setError(response.data.error);
-          resolve();
           navigate('/signin');
         }, 3000);
       } catch (error) {
@@ -71,7 +72,7 @@ function SignUp() {
     toast.promise(resolveAfter3Sec, {
       pending: 'Creating account...',
       success: 'Account created successfully 👌',
-      error: error || 'Error creating account',
+      error: error ,
     });
   };
 

@@ -12,13 +12,15 @@ function SignIn() {
     email: '',
     password: '',
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
   // Redirect to dashboard if user is already logged in
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
-      navigate('/')
+      setTimeout(() => {
+        navigate('/dashboard')
+      }, 2000)
     }
   }, [token, navigate])
 
@@ -42,20 +44,28 @@ function SignIn() {
           setError("Fill all the fields");
         }
 
-        ApiUrl.post('/user/login', formData).then((response) => {
-          const token = response.data.token;
-          const user = response.data.user;
-          console.log(response);
+        const response = await ApiUrl.post('/user/login', formData);
+        console.log("err", response);
+        if (response.data.error) {
           setError(response.data.error);
-          setCookie('token', token);
-          setCookie('user', user);
-        })
-        // Simulate a pending state for 3 seconds
-        setTimeout(() => {
-          resolve();
-        }, 3000);
-        navigate('/');
+          reject();
+          return;
+        }
+        resolve();
+        const token = response.data.token;
+        const user = response.data.user;
+
+        if (token === null) {
+          setError(response.data.error);
+          return;
+        }
+
+        setError(response.data.error);
+        setCookie('token', token);
+        setCookie('user', user);
+
       } catch (error) {
+        setError(error);
         reject(error);
       }
       // localStorage.setItem('user', JSON.stringify(user))
@@ -66,7 +76,7 @@ function SignIn() {
     toast.promise(resolveAfter3Sec, {
       pending: 'Logging in...',
       success: 'Logged in 👌',
-      error: error || 'Error logging in',
+      error: error || 'An error occurred',
     });
   }
   return (
