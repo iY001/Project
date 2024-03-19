@@ -58,11 +58,8 @@ function SignUp() {
         await setTimeout(() => {
           setError(response.data.error);
           resolve();
+          navigate('/signin');
         }, 3000);
-
-        // Handle other success-related actions (e.g., redirect)
-        console.log('Account created successfully:', response.data);
-        redirect('/signin');
       } catch (error) {
         // Handle the error (e.g., display an error message)
         console.error('Error creating account:', error);
