@@ -45,6 +45,7 @@ function SignIn() {
         ApiUrl.post('/user/login', formData).then((response) => {
           const token = response.data.token;
           const user = response.data.user;
+          console.log(response);
           setError(response.data.error);
           setCookie('token', token);
           setCookie('user', user);
