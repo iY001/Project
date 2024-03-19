@@ -19,7 +19,9 @@ async function register(req, res) {
         });
     
         if (existingUser) {
-          return res.status(400).send('Username already exists');
+          return res.status(400).send({
+            error: 'Username already exists',
+          });
         }
     
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,7 +37,9 @@ async function register(req, res) {
         res.json({ token });
       } catch (error) {
         console.log(error)
-        res.status(500).send('Error registering user');
+        res.status(500).send({
+          error: 'An error occurred while registering',
+        });
       }
 }
 

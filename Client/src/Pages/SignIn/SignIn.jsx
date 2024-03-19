@@ -12,7 +12,7 @@ function SignIn() {
     email: '',
     password: '',
   });
-  const [error, setError] = useState({});
+  const [error, setError] = useState();
 
   // Redirect to dashboard if user is already logged in
   const navigate = useNavigate();
@@ -45,18 +45,15 @@ function SignIn() {
         ApiUrl.post('/user/login', formData).then((response) => {
           const token = response.data.token;
           const user = response.data.user;
+          setError(response.data.error);
           setCookie('token', token);
           setCookie('user', user);
-          console.log(token)
-          console.log(user)
         })
         // Simulate a pending state for 3 seconds
         setTimeout(() => {
           resolve();
         })
       } catch (error) {
-        // Handle the error (e.g., display an error message)
-        console.error('Error creating account:', error);
         reject(error);
       }
       // localStorage.setItem('user', JSON.stringify(user))

@@ -19,13 +19,18 @@ async function login(req, res) {
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-      return res.status(401).send('Invalid username or password');
+      return res.status(401).send({
+        error: 'Invalid username or password'
+      });
     }
 
     const token = jwt.sign({ id: user.id }, 'secret');
     res.send({ token, "id": user.id , user : user});
   } catch (error) {
-    res.status(500).send('Error logging in');
+    res.status(500).send({
+      error: 'An error occurred while logging in',
+      message: error.message,
+    });
   }
 }
 

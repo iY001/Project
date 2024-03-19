@@ -16,7 +16,7 @@ function SignUp() {
     confirmPassword: '',
   });
 
-  const [error, setError] = useState({});
+  const [error, setError] = useState();
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
@@ -56,6 +56,7 @@ function SignUp() {
         // Make a POST request to your signup API endpoint
         const response = await ApiUrl.post('/user/register', formData);
         await setTimeout(() => {
+          setError(response.data.error);
           resolve();
         }, 3000);
 
