@@ -53,8 +53,8 @@ function SignIn() {
         // Simulate a pending state for 3 seconds
         setTimeout(() => {
           resolve();
-          navigate('/');
         }, 3000);
+        navigate('/');
       } catch (error) {
         reject(error);
       }
