@@ -42,4 +42,7 @@ router.post('/:match_id/connectevent/:event_id', async (req, res) => {
 router.post('/:match_id/connectteam/:team_id', async (req, res) => {
     connectTeam(req, res);
 })
+router.post('/:match_id/connectmatch/:team_id/:event_id', async (req, res) => {
+    connectTeam(req, res);
+})
 module.exports = router

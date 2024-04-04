@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 
 const connectEvent = async (req, res) => {
-  const { match_id , event_id } = req.params
+  const { match_id, event_id } = req.params
   try {
     const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ const connectEvent = async (req, res) => {
       data: {
         matches: {
           connect: {
-            id: match_id,
+            id: [match_id],
           },
         },
       },

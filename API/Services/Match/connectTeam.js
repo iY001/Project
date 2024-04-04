@@ -16,7 +16,7 @@ const connectTeam = async (req, res) => {
       return res.status(404).json({ error: 'Match not found' });
     }
 
-    // Check if the event exists
+    // Check if the team exists
     const existingTeam = await prisma.team.findUnique({
       where: {
         id: team_id,
@@ -35,7 +35,7 @@ const connectTeam = async (req, res) => {
       data: {
         matches: {
           connect: {
-            id: match_id, // Connect the new match
+            id: [match_id], // Connect the new match
           }
         },
       },

@@ -48,9 +48,8 @@ function AddMatch({ setShowForm }) {
       console.log("match response", matchResponse.data.newMatch.id);
       // Connect teams and event
       await Promise.all([
-        connectTeam(matchResponse.data.newMatch.id, team_id1),
-        connectTeam(matchResponse.data.newMatch.id, team_id2),
-        connectEvent(matchResponse.data.newMatch.id, event_id)
+        connectMatch(matchResponse.data.newMatch.id, team_id1 , event_id),
+        connectMatch(matchResponse.data.newMatch.id, team_id2 , event_id),
       ]);
 
       // Show success message
@@ -73,9 +72,9 @@ function AddMatch({ setShowForm }) {
     }
   };
 
-  const connectTeam = async (match_id, team_id) => {
+  const connectMatch = async (match_id, team_id , event_id) => {
     try {
-      await ApiUrl.post(`/match/${match_id}/connectteam/${team_id}`);
+      await ApiUrl.post(`/match/${match_id}/connectmatch/${team_id}/${event_id}`);
     } catch (error) {
       console.error("Error connecting team:", error);
       throw error;

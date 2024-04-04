@@ -34,48 +34,47 @@ model Event {
   organizer_phone_number String?
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
-  team_id                String?  @db.ObjectId
-  teams                  Team?    @relation(fields: [team_id], references: [id])
-  match_id               String?  @map("match_id") @db.ObjectId
-  matches                Match?   @relation(fields: [match_id], references: [id])
+  // team_id                String?  @db.ObjectId
+  // teams                  Team?    @relation(fields: [team_id], references: [id])
+  // match_id               String?  @map("match_id") @db.ObjectId
+  // matches                Match?   @relation(fields: [match_id], references: [id])
+  matches                Match[]
+}
+
+model Match {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  score1         Int?             @default(0)
+  score2         Int?             @default(0)
+  winner         String?          @default("Draw")
+  match_date     DateTime?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  event_id       String           @db.ObjectId
+  event          Event            @relation(fields: [event_id], references: [id])
+  TeamAndMatches TeamAndMatches[]
+}
+
+model TeamAndMatches {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  match_id String @db.ObjectId
+  match    Match  @relation(fields: [match_id], references: [id])
+  team_id  String @db.ObjectId
+  team     Team   @relation(fields: [team_id], references: [id])
 }
 
 model Team {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String           @id @default(auto()) @map("_id") @db.ObjectId
   team_name          String
   team_logo          String?
   total_score        Int
   coach_name         String
   coach_email        String?
   coach_phone_number String?
-  created_at         DateTime @default(now())
-  updated_at         DateTime @updatedAt
-  match_id           String?  @map("match_id") @db.ObjectId
-  matches            Match?   @relation(fields: [match_id], references: [id])
-  // logo               Logo[]
-  event              Event[]
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @updatedAt
   players            Player[]
+  TeamAndMatches     TeamAndMatches[]
 }
-
-model Match {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  score1     Int?      @default(0)
-  score2     Int?      @default(0)
-  winner     String?   @default("Draw")
-  match_date DateTime?
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  teams      Team[]
-  events     Event[]
-}
-
-// model Logo {
-//   id            String @id @default(auto()) @map("_id") @db.ObjectId
-//   logo_filename String
-//   data          Bytes
-//   team_id       String @map("team_id") @db.ObjectId
-//   team          Team   @relation(fields: [team_id], references: [id])
-// }
 
 model Player {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
