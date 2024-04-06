@@ -1,51 +1,46 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+// const { PrismaClient } = require("@prisma/client");
 
-async function connectTeam(req, res) {
-  try {
-    const eventId = req.params.eventId;
-    const teamId = req.params.teamId;
+// async function connectTeam(req, res) {
+//   try {
+//     const prisma = new PrismaClient();
+//     const playerId = req.params.playerId;
+//     const teamId = req.params.teamId;
 
-    const event = await prisma.event.findUnique({
-      where: { id: eventId },
-      include: { teams: true },
-    });
+//     const team = await prisma.team.findFirst({
+//       where: { id: teamId },
+//       include: { players: true },
+//     });
 
-    if (!event) {
-      return res.status(404).send('Event not found');
-    }
+//     const player = await prisma.player.findFirst({
+//       where: { id: playerId },
+//     });
 
-    const team = await prisma.team.findUnique({
-      where: { id: teamId },
-    });
+//     if (!player) {
+//       return res.status(404).send('Player not found');
+//     }
 
-    if (!team) {
-      return res.status(404).send('Team not found');
-    }
+//     if (!team) {
+//       return res.status(404).send('Team not found');
+//     }
 
-    const existingTeamIds = Array.isArray(event.teams)
-      ? event.teams((existingTeam) => existingTeam.id)
-      : [];
+//     if (team.players.some((p) => p.id === playerId)) {
+//       return res.status(400).send('Player already connected to team');
+//     }
 
-    // Check if the team is already connected to the event
-    if (existingTeamIds.includes(teamId)) {
-      return res.status(400).send('Team is already connected to the event');
-    }
+//     await prisma.team.update({
+//       where: { id: teamId },
+//       data: {
+//         players: {
+//           connect: { id: playerId },
+//         },
+//       },
+//     });
+//     console.log(team);
+//     res.send('Player connected to team successfully');
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send('Error connecting player to team');
+//   }
+// }
 
-    await prisma.event.update({
-      where: { id: eventId },
-      data: {
-        teams: {
-          connect: { id: teamId },
-        },
-      },
-    });
-
-    res.send('Event connected to team successfully');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error connecting event to team');
-  }
-}
-
-module.exports = connectTeam;
+// module.exports = connectTeam;

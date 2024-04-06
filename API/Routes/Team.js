@@ -32,13 +32,17 @@ router.put('/:id', async (req, res) => {
 });
 
 
-router.post('/:eventId/connectTeam/:teamId', async (req, res) => {
-  connectTeam(req, res);
-});
+// router.post('/:eventId/connectTeam/:teamId', async (req, res) => {
+//   connectTeam(req, res);
+// });
 
 router.delete('/:id', async (req, res) => {
   deleteTeamById(req, res);
 });
+
+// router.post('/:teamId/connectplayer/:playerId', async (req, res) => {
+//   connectTeam(req, res);
+// });
 
 router.put('/:teamId/removeplayer/:playerId', async (req, res) => {
   removePlayer(req, res);

@@ -11,8 +11,9 @@ const Event = ({ event }) => {
     const [error, setError] = useState("")
     const getTeam = async () => {
         try {
-            const response = await ApiUrl.get("/team/" + event.team_id)
-            setTeam(response.data)
+            const response = await ApiUrl.get("/team")
+            const seletedTeam = response.data.find((team) => team.id === event.team_id)
+            setTeam(seletedTeam)
         } catch (err) {
             console.log(err)
             setError(err, "Something went wrong")

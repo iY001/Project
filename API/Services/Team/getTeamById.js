@@ -7,7 +7,6 @@ async function getTeamById(req, res) {
     const team = await prisma.team.findFirst({
       where: { id: teamId },
       include: {
-        matches: true,
         players: true
       },
     });

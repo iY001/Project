@@ -10,8 +10,8 @@ function AddMatch({ setShowForm }) {
 
   const [formData, setFormData] = useState({
     match_date: "",
-    team_id1: "",
-    team_id2: "",
+    team_id_1: "",
+    team_id_2: "",
     event_id: "", // Changed from "event" to "event_id"
   });
 
@@ -41,15 +41,15 @@ function AddMatch({ setShowForm }) {
   const handleSubmit = async () => {
     try {
       setLoading(true)
-      const { match_date, team_id1, team_id2, event_id } = formData;
+      const { match_date, team_id_1, team_id_2, event_id } = formData;
 
       // Create match
-      const matchResponse = await ApiUrl.post("/match", { match_date });
+      const matchResponse = await ApiUrl.post("/match", { match_date , event_id });
       console.log("match response", matchResponse.data.newMatch.id);
       // Connect teams and event
+      console.log("start connecting");
       await Promise.all([
-        connectMatch(matchResponse.data.newMatch.id, team_id1 , event_id),
-        connectMatch(matchResponse.data.newMatch.id, team_id2 , event_id),
+        connectTeams(matchResponse.data.newMatch.id, team_id_1 , team_id_2 ),
       ]);
 
       // Show success message
@@ -58,8 +58,8 @@ function AddMatch({ setShowForm }) {
       // Reset form and navigate
       setFormData({
         match_date: "",
-        team_id1: "",
-        team_id2: "",
+        team_id_1: "",
+        team_id_2: "",
         event_id: ""
       });
       setLoading(false)
@@ -72,23 +72,17 @@ function AddMatch({ setShowForm }) {
     }
   };
 
-  const connectMatch = async (match_id, team_id , event_id) => {
+  const connectTeams = async (match_id, team_id_1 , team_id_2) => {
     try {
-      await ApiUrl.post(`/match/${match_id}/connectmatch/${team_id}/${event_id}`);
+      console.log("from connect teams", match_id, team_id_1 , team_id_2);
+      const team_ids = [team_id_1, team_id_2];
+      await ApiUrl.post(`/match/connectteams/${match_id}` , {team_ids});
     } catch (error) {
       console.error("Error connecting team:", error);
       throw error;
     }
   };
 
-  const connectEvent = async (match_id, event_id) => {
-    try {
-      await ApiUrl.post(`/match/${match_id}/connectevent/${event_id}`);
-    } catch (error) {
-      console.error("Error connecting event:", error);
-      throw error;
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -127,7 +121,7 @@ function AddMatch({ setShowForm }) {
               <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
             </div>
             <div className="relative z-0 w-full mb-5">
-              <select onChange={handleInputChange} name="team_id1" placeholder="select a team" className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
+              <select onChange={handleInputChange} name="team_id_1" placeholder="select a team" className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 <option value selected disabled hidden />
                 {
                   teams.map((team) => (
@@ -139,7 +133,7 @@ function AddMatch({ setShowForm }) {
               <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
             </div>
             <div className="relative z-0 w-full mb-5">
-              <select onChange={handleInputChange} name="team_id2" placeholder="select a team" className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
+              <select onChange={handleInputChange} name="team_id_2" placeholder="select a team" className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
                 <option value selected disabled hidden />
                 {
                   teams.map((team) => (

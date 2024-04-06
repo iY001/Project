@@ -3,11 +3,11 @@ const prisma = new PrismaClient();
 
 async function getEventById(req, res) {
     try {
-        const eventId = parseInt(req.params.id);
+        const eventId = req.params.id
         const event = await prisma.event.findUnique({
           where: { id: eventId },
           include: {
-            teams: true,
+            matches: true,
           },
         });
         if (event) {

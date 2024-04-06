@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function getPlayerById(req, res) {
     try {
-        const playerId = parseInt(req.params.id);
+        const playerId = req.params.id;
         const student = await prisma.player.findUnique({
           where: { id: playerId },
           include: {
@@ -13,7 +13,7 @@ async function getPlayerById(req, res) {
         if (student) {
           res.json(student);
         } else {
-          res.status(404).send('Student not found');
+          res.status(404).send('Player not found');
         }
       } catch (error) {
         res.status(500).send('Error retrieving student');

@@ -84,7 +84,7 @@ function Dashboard() {
                                         {player.name}
                                     </h1>
                                     <p className='text-gray-500'>Score: {player.score}</p>
-                                    <p className='text-gray-500 w-full'>Team: {player.team.team_name}</p>
+                                    <p className='text-gray-500 w-full'>Team: {player.team?.team_name || "N/A"}</p>
                                 </div>
                             </div>
                         ))}

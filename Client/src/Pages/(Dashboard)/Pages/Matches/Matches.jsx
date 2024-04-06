@@ -23,7 +23,7 @@ function Matches() {
   useEffect(() => {
     getMatches()
   }, [])
-  console.log("match", matches)
+  console.log("matches", matches)
   return (
     <div className="md:py-2 lg:px-4">
       <h1 className="text-3xl text-main font-medium">Matches</h1>
@@ -34,7 +34,7 @@ function Matches() {
     <h1 className='text-3xl text-main font-bold'>No matches found</h1>
   ) : (
     matches.map((match, index) => (
-      <Match key={match.id} match={match} teams={match.teams} index={index} />
+      <Match key={match.id} match={match} teams={match.TeamAndMatches} index={index} />
     ))
   )
 }

@@ -58,14 +58,15 @@ model TeamAndMatches {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   match_id String @db.ObjectId
   match    Match  @relation(fields: [match_id], references: [id])
-  team_id  String @db.ObjectId
-  team     Team   @relation(fields: [team_id], references: [id])
+  team_id_1  String @db.ObjectId
+  team_id_2  String @db.ObjectId
+  team1     Team   @relation("team1", fields: [team_id_1], references: [id])
+  team2     Team   @relation("team2", fields: [team_id_2], references: [id])
 }
 
 model Team {
   id                 String           @id @default(auto()) @map("_id") @db.ObjectId
   team_name          String
-  team_logo          String?
   total_score        Int
   coach_name         String
   coach_email        String?
@@ -73,7 +74,8 @@ model Team {
   created_at         DateTime         @default(now())
   updated_at         DateTime         @updatedAt
   players            Player[]
-  TeamAndMatches     TeamAndMatches[]
+  Team1AndMatches     TeamAndMatches[] @relation("team1")
+  Team2AndMatches     TeamAndMatches[] @relation("team2")
 }
 
 model Player {

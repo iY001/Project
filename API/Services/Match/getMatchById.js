@@ -7,6 +7,9 @@ const getMatchById = async (req, res) => {
         const match = await prisma.match.findFirst({
             where: {
                 id: matchId
+            },
+            include: {
+                TeamAndMatches: true
             }
         });
         res.status(200).json(match);

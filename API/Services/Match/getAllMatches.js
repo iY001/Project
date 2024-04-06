@@ -4,10 +4,14 @@ const getAllMatches = async (req, res) => {
     try {
         const prisma = new PrismaClient();
         const matches = await prisma.match.findMany(
-            {
+            {   
                 include: {
-                    teams: true,
-                    events: true,
+                    TeamAndMatches: {
+                        include: {
+                            team1: true,
+                            team2: true
+                        }
+                    }
                 }
             }
         );

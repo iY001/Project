@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ApiUrl } from "../../../../../Config/ApiUrl";
 import { format } from 'date-fns';
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,21 @@ const Match = ({ match, teams, index }) => {
     const [removeLoading, setRemoveLoading] = useState(false);
     const [resetLoading, setResetLoading] = useState(false);
     const navigate = useNavigate();
+    const [matchEvent , setMatchEvent] = useState();
+
+
+    const getMatchEvent = async () => {
+        try {
+            const response = await ApiUrl.get(`/event/${match.event_id}`);
+            console.log("res",response);
+            setMatchEvent(response.data);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getMatchEvent();
+    }, [])
     const deleteMatch = async () => {
         try {
             setRemoveLoading(true);
@@ -119,13 +134,18 @@ const Match = ({ match, teams, index }) => {
         }
     };
     const formattedDate = format(new Date(match.match_date), 'yyyy-MM-dd');
+
+    console.log("teams" , teams);
+    
+    console.log("match" , match);
+    console.log("matchEvent" , matchEvent);
     return (
         <>
             <div className='w-full bg-main bg-opacity-90 p-4 rounded-lg mb-6'>
                 <section className="flex lg:flex-row flex-col items-center">
                     <section className="flex lg:flex-row items-center flex-col lg:w-[50%] w-full lg:gap-3">
                         <h1 className='text-3xl text-white font-medium'>Match {index + 1}</h1>
-                        <h1 className='text-md text-gray-100 font-medium'>{match.events[0] ? match.events[0].event_name : "N/A"}</h1>
+                        <h1 className='text-md text-gray-100 font-medium'>{ matchEvent ? matchEvent.event_name : "N/A"}</h1>
                         <h1 className='text-md text-white font-medium'>{formattedDate}</h1>
                     </section>
                     <section className="flex lg:flex-row justify-end lg:items-center flex-col lg:w-[50%] w-full lg:gap-3">
@@ -134,14 +154,14 @@ const Match = ({ match, teams, index }) => {
                 </section>
                 <div className='w-full mt-2 flex justify-center lg:flex-nowrap flex-wrap text-center  bg-white rounded-lg'>
                     <section className='w-full flex flex-col lg:flex-row justify-between items-center h-24 bg-sec rounded-lg drop-shadow-lg'>
-                        <h1 className='text-3xl text-main w-1/2 font-bold'>{teams[0] ? teams[0].team_name : "N/A"}</h1>
-                        <h1 className='text-3xl text-gray-700 w-1/2'>{match.score1}</h1>
+                        <h1 className='text-3xl text-main w-1/2 font-bold'>{teams[0] ? teams[0].team1.team_name : "N/A"}</h1>
+                        <h1 className='text-3xl text-gray-700 w-1/2'>{match ? match.score1 : "N/A"}</h1>
                     </section>
                     <section className='lg:w-[20%] w-full text-center h-24 bg-sec rounded-lg drop-shadow-lg'>
                         <img src="/assets/Versus - icon.png" className='lg:w-fit w-fit lg:h-24 h-full mx-auto' alt="" />
                     </section>
                     <section className='w-full flex flex-col-reverse lg:flex-row-reverse justify-between items-center h-24  bg-sec rounded-lg drop-shadow-lg'>
-                        <h1 className='text-3xl text-main w-1/2 font-bold'>{teams[1] ? teams[1].team_name : "N/A"}</h1>
+                        <h1 className='text-3xl text-main w-1/2 font-bold'>{teams[0] ? teams[0].team2.team_name : "N/A"}</h1>
                         <h1 className='text-3xl text-gray-700 w-1/2'>{match.score2}</h1>
                     </section>
                 </div>
@@ -151,7 +171,7 @@ const Match = ({ match, teams, index }) => {
                             onClick={() => addPoint(
                                 {
                                     match_id: match.id,
-                                    team1: teams[0].id,
+                                    team1: teams[0].team1.id,
                                     point: 1
                                 },
                                 // Pass setLoading function to addPoint
@@ -164,7 +184,7 @@ const Match = ({ match, teams, index }) => {
                             onClick={() => removePoint(
                                 {
                                     match_id: match.id,
-                                    team1: teams[0].id,
+                                    team1: teams[0].team1.id,
                                     point: 1
                                 },
                                 // Pass setLoading function to addPoint
@@ -182,7 +202,7 @@ const Match = ({ match, teams, index }) => {
                             onClick={() => addPoint(
                                 {
                                     match_id: match.id,
-                                    team2: teams[1].id,
+                                    team2: teams[0].team2.id,
                                     point: 1
                                 },
                                 // Pass setLoading function to addPoint
@@ -195,7 +215,7 @@ const Match = ({ match, teams, index }) => {
                             onClick={() => removePoint(
                                 {
                                     match_id: match.id,
-                                    team2: teams[1].id,
+                                    team2: teams[0].team2.id,
                                     point: 1
                                 },
                                 // Pass setLoading function to addPoint
