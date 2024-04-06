@@ -11,15 +11,27 @@ async function deleteTeamById(req, res) {
     });
 
     if (!existingTeam) {
-      return res.status(404).send('Team not found');
+      return res.status(404).send({
+        message : `Team Not Found`
+      });
     }
-
+    await prisma.teamAndMatches.deleteMany({
+      where: {
+        OR: [
+          { team1: { id: teamId } },
+          { team2: { id: teamId } }
+        ]
+      },
+    });
     // Delete the team
     await prisma.team.delete({
-      where: { id: teamId }
+      where: { id: existingTeam.id }
     });
 
-    res.status(204).send(`Team ${teamId} Deleted Successfully`); // Send a 204 No Content response upon successful deletion
+    res.status(204).send({
+      message : `Team ${teamId} Deleted Successfully`,
+      data : existingTeam
+    }); // Send a 204 No Content response upon successful deletion
   } catch (error) {
     console.log(error);
     res.status(500).send('Error deleting team');

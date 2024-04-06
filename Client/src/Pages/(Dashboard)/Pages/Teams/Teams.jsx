@@ -32,7 +32,7 @@ function Teams() {
     useEffect(() => {
         getTeams()
     }, [])
-
+    console.log(selectedTeam.id);
     const deleteTeam = async () => {
         try {
             const promise = new Promise(async (resolve, reject) => {
